@@ -1,0 +1,141 @@
+﻿@model  ContactForm.Models.ContactViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Contact Form</h1>
+    <p class="lead">Please use the form below to contact us</p>
+</div>
+
+<div id="contact-us" class="container">
+    <h3 class="heading-with-border">Contact Us</h3>
+
+
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-9">
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="validation-summary-valid alert alert-danger" data-valmsg-summary="true" id="validation-summary">
+                        <span>The following errors have occurred</span>
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    </div>
+                }
+                if (!Model.ErrorMessage.IsEmpty())
+                {
+                    <div class="validation-summary-valid alert alert-danger" data-valmsg-summary="true" id="validation-summary">
+                        <span>@Model.ErrorMessage</span>
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-4 col-md-3" for="FirstName">Name<em class="required">*</em></label>
+                    <div class="col-xs-6 col-sm-4 col-md-4">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @id = "Firstname", @maxlength = "50", @placeholder = "First name", @tabindex = "1", type = "text" })
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-md-4">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @id = "Lastname", @maxlength = "50", @placeholder = "Last name", @tabindex = "2" })
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 col-md-3" for="Email">Email<em class="required">*</em></label>
+                    <div class="col-sm-8 col-md-8">
+                        @Html.TextBoxFor(m => m.Emaill, new { @class = "form-control", @id = "Email", @maxlength = "250", @tabindex = "3" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 col-md-3" for="PhoneNumber">Phone<em class="required">*</em></label>
+                    <div class="col-sm-8 col-md-8">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="selection">+61</span><span class="caret"></span></button>
+                                @*Country code for DEMO only*@
+                                <ul class="dropdown-menu">
+                                    <li><a href="#"><span class="country">Argentina</span><span class="idd">+54</span></a></li>
+                                    <li><a href="#"><span class="country">Australia</span><span class="idd">+61</span></a></li>
+                                    <li><a href="#"><span class="country">Canada</span><span class="idd">+1</span></a></li>
+                                    <li><a href="#"><span class="country">China</span><span class="idd">+86</span></a></li>
+                                    <li><a href="#"><span class="country">United Kingdom</span><span class="idd">+44</span></a></li>
+                                    <li><a href="#"><span class="country">United States</span><span class="idd">+1</span></a></li>
+                                </ul>
+                            </div><!-- /btn-group -->
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @id = "PhoneNumber", @maxlength = "250", @tabindex = "3" })
+                        </div><!-- /input-group -->
+                        <input type="hidden" id="IddCode" name="IddCode" value="+61" />
+                        <input type="hidden" id="DefaultIddCode" name="DefaultIddCode" value="+61" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 col-md-3" for="ContactType">Enquiry Type</label>
+                    <div class="col-sm-8 col-md-8">
+                        @* Fixed value Dropdownlist*@
+                        <select id="ContactType" name="ContactType" class="form-control" tabindex="4">
+                            <option selected="selected">General Enquiry</option>
+                            <option>Training Enquiry</option>
+                            <option>Lodge a Complaint</option>
+                            <option>Lost Property</option>
+                            <option>My Address is Missing</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 col-md-3" for="Comment">Comment</label>
+                    <div class="col-sm-8 col-md-8">
+                        @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @id = "Comment", @cols="20", @name= "Comment", @rows = "2", @tabindex = "5" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="recaptcha_widget" class="col-md-offset-3 col-sm-offset-4 col-sm-4 col-md-8">
+
+                        <div id="recaptcha_image_wrapper">
+                            <div id="recaptcha_image"></div>
+                        </div>
+
+                        <div id="recaptcha_icons" class="text-left">
+                            <a href="javascript:Recaptcha.reload()" title="Get another CAPTCHA" tabindex="6">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </a>
+                            <a href="javascript:Recaptcha.switch_type('image')" class="recaptcha_only_if_audio" title="Get an image CAPTCHA" tabindex="7">
+                                <span class="glyphicon glyphicon-font"></span>
+                            </a>
+                            <a href="javascript:Recaptcha.switch_type('audio')" class="recaptcha_only_if_image" title="Get an audio CAPTCHA" tabindex="8">
+                                <span class="glyphicon glyphicon-volume-up"></span>
+                            </a>
+                            <a href="javascript:Recaptcha.showhelp()" title="Help" tabindex="9">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @*CAPTCHA for DEMO only*@
+                    <label class="control-label col-sm-4 col-md-3" for="recaptcha_response_field">Verification Text<br/>(DEMO only)</label>
+                    <div class="col-sm-8 col-md-8">
+                        <input class="form-control" id="recaptcha_response_field" maxlength="250" name="recaptcha_response_field" type="text" value="" />
+                    </div>
+                    <script type="text/javascript">var RecaptchaOptions = { theme: 'custom',tabindex: '10',custom_theme_widget: 'recaptcha_widget'};</script>
+                    <script type="text/javascript" src="https://www.google.com/recaptcha/api/challenge?k=6LeST_YSAAAAAOjmkdjEhtONBD9wt5MAVRJQyDXw"></script>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-xs-6 col-md-2">
+                        <button type="submit" id="submitbutton" class="btn btn-block btn-primary" tabindex="11">Submit</button>
+                    </div>
+                    <div class="col-xs-6 col-md-2">
+                        <button type="button" id="resetbutton" class="btn btn-block  btn-default" tabindex="12">Clear</button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3">
+            <div class="phonedisplay well well-sm">
+                <div><b>Phone</b></div>
+                <div><a href="tel:132227">13 2227 (13 CABS)</a></div>
+            </div>
+        </div>
+    </div>
+</div>
