@@ -93,8 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ContactForm\ContactForm.csproj">
-      <Project>{861A7347-2C9A-44D9-84E6-E5425A715801}</Project>
+      <Project>{861a7347-2c9a-44d9-84e6-e5425a715801}</Project>
       <Name>ContactForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contact\Contact.csproj">
+      <Project>{b8ff7d09-678f-495c-8a20-2a41daa00917}</Project>
+      <Name>Contact</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
